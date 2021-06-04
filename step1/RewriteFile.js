@@ -73,6 +73,7 @@ class RewriteFile {
         this.onRewriteJs(json);
     }
 
+    // js文件操作
     onRewriteJs(data) {
         console.log("开始重写Js文件");
         let total = 0;
@@ -93,9 +94,8 @@ class RewriteFile {
                     const code = this.getData(data[n][fileType])
                     this.wHtml(++count === total, n + '.' + fileType, code, fileType);
                 } catch (err) {
-                    console.log("错误文件，解析不了", n + '.' + fileType);
+                    console.log("\n错误文件，解析不了", n + '.' + fileType);
                 }
-
             }
         }
     }
