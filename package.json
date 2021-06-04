@@ -1,49 +1,49 @@
 {
-  "name": "weapp2taro",
-  "version": "1.0.0",
-  "description": "完成了以下几个属性转换",
-  "main": "index.js",
-  "scripts": {
-    "dev": "babel-node --presets env index.js",
-    "start": "node index.js",
-    "start:template": "node index.js && npm run template",
-    "template": "node ./template.js && node ./last.js && node ./createview.js",
-    "wxml": "node ./template.js",
-    "parse:wxml": "node ./step1/index.js && node ./step1/weapp.js",
-    "del": "node ./step1/delDist.js",
-    "init": "npm run del && npm run parse:wxml"
-  },
-  "keywords": [],
-  "author": "sunguowei",
-  "license": "ISC",
-  "dependencies": {
-    "esprima": "^4.0.1",
-    "estraverse": "^5.2.0"
-  },
-  "devDependencies": {
-    "@vue/compiler-dom": "^3.0.11",
-    "@vue/component-compiler-utils": "^3.2.0",
-    "acorn": "^8.3.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "babel-runtime": "^6.26.0",
-    "escodegen": "^2.0.0",
-    "koa": "^2.13.1",
-    "koa-bodyparser": "^4.3.0",
-    "koa-router": "^10.0.0",
-    "koa-static": "^5.0.0",
-    "opn": "^6.0.0",
-    "progress": "^2.0.3",
-    "recast": "^0.20.4",
-    "vue-template-compiler": "^2.6.13"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/skySungw/weapp2taro.git"
-  },
-  "bugs": {
-    "url": "https://github.com/skySungw/weapp2taro/issues"
-  },
-  "homepage": "https://github.com/skySungw/weapp2taro#readme"
+    "name": "weapp2taro",
+    "version": "1.0.1",
+    "description": "完成了以下几个属性转换",
+    "main": "index.js",
+    "scripts": {
+        "dev": "babel-node --presets env index.js",
+        "start": "node index.js",
+        "start:template": "node index.js && npm run template",
+        "template": "node ./template.js && node ./last.js && node ./createview.js",
+        "wxml": "node ./template.js",
+        "parse:wxml": "node ./step1/index.js && node ./step1/weapp.js",
+        "del": "node ./step1/delDist.js",
+        "init": "npm run del && npm run parse:wxml"
+    },
+    "keywords": [],
+    "author": "sunguowei",
+    "license": "ISC",
+    "dependencies": {
+        "esprima": "^4.0.1",
+        "estraverse": "^5.2.0"
+    },
+    "devDependencies": {
+        "@vue/compiler-dom": "^3.0.11",
+        "@vue/component-compiler-utils": "^3.2.0",
+        "acorn": "^8.3.0",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-register": "^6.26.0",
+        "babel-runtime": "^6.26.0",
+        "escodegen": "^2.0.0",
+        "koa": "^2.13.1",
+        "koa-bodyparser": "^4.3.0",
+        "koa-router": "^10.0.0",
+        "koa-static": "^5.0.0",
+        "opn": "^6.0.0",
+        "progress": "^2.0.3",
+        "recast": "^0.20.4",
+        "vue-template-compiler": "^2.6.13"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/skySungw/weapp2taro.git"
+    },
+    "bugs": {
+        "url": "https://github.com/skySungw/weapp2taro/issues"
+    },
+    "homepage": "https://github.com/skySungw/weapp2taro#readme"
 }
