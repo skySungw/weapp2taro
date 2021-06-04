@@ -3,7 +3,6 @@ import path from 'path';
 import config from '../weapp2taro.config';
 
 const { sourceDir, outPutDir, splitStr } = config;
-console.log("sourceDir", sourceDir)
 
 // 做删除,copy文件准备
 class PrepareParam {

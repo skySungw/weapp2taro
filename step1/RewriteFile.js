@@ -1,11 +1,21 @@
 import fs from 'fs';
 const ProgressBar = require('progress');
 import config from '../weapp2taro.config';
+import AstToJs from './AstToJs';
+const recast = require('recast');
 const { splitStr } = config;
 
 class RewriteFile {
     constructor(filesData, countJson) {
         this.init(filesData, countJson);
+    }
+
+    getData(code) {
+        const ast = recast.parse(code);
+        const astToJs = new AstToJs()
+        const res = astToJs.init(ast);
+        //将AST对象重新转回可以阅读的代码
+        return recast.print(res).code;
     }
 
     //  filesData - 所有读取后的数据, countJson 各个文件数量
@@ -65,6 +75,29 @@ class RewriteFile {
 
     onRewriteJs(data) {
         console.log("开始重写Js文件");
+        let total = 0;
+        let count = 0;
+        const fileType = 'js';
+        for (let fileName in data) {
+            if (data[fileName][fileType]) {
+                ++total;
+            }
+        }
+        // 设置进度条
+        let writeBar = new ProgressBar('存储 js 进度: [:bar]:current/:total', { total: total, width: Math.floor(total / 10), complete: '=' });
+        for (let n in data) {
+            if (data[n][fileType]) {
+                // 进度条 +1
+                writeBar.tick(1);
+                try {
+                    const code = this.getData(data[n][fileType])
+                    this.wHtml(++count === total, n + '.' + fileType, code, fileType);
+                } catch (err) {
+                    console.log("错误文件，解析不了", n + '.' + fileType);
+                }
+
+            }
+        }
     }
 
     // 重写wxml文件
@@ -79,26 +112,25 @@ class RewriteFile {
             }
         }
         // 设置进度条
-        let writeBar = new ProgressBar('存储进度: [:bar]:current/:total', { total: total, width: Math.floor(total / 10), complete: '=' });
+        let writeBar = new ProgressBar('存储 wxml 进度: [:bar]:current/:total', { total: total, width: Math.floor(total / 10), complete: '=' });
         for (let n in data) {
             if (data[n][fileType]) {
                 // 进度条 +1
                 writeBar.tick(1);
-                this.wHtml(++count === total, n + '.' + fileType, data[n][fileType]);
+                this.wHtml(++count === total, n + '.' + fileType, data[n][fileType], fileType);
             }
         }
-
     }
 
     // 写文件
-    wHtml(flag, file, result) {
+    wHtml(flag, file, result, type) {
         fs.writeFile(file, result, 'utf-8', (err) => {
             if (err) {
                 console.log(err);
                 return false;
             }
             if (flag) {
-                console.log("wxml文件全部重写完毕!");
+                console.log(`${type} 类型 文件全部重写完毕!`);
             }
         })
     }
