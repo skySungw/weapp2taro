@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {margin:0;padding:0;}
+    .container {width: 100%;box-sizing: border-box;padding: 10px;}
+    .container ul {padding-top: 10px;}
+    .container ul li {word-wrap: break-word;border-bottom: 1px solid #999;padding: 10px;}
+    .container ul li p {line-height: 30px;}
+    .container ul li p:nth-child(odd) span {color: red;}
+    .container ul li p span {color: green;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <ul>
+      {% for item in result %}
+        <li>
+          <h4>{{loop.index}}、{{loop.key}}</h4>
+          <p><span>js Methods</span>: {{ item.jsMethod }}</p>
+          <p><span>wxml Methods</span>: {{ item.wxmlMethod }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
