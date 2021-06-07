@@ -11,7 +11,7 @@
     .container ul {padding-top: 10px;}
     .container ul li {word-wrap: break-word;border-bottom: 1px solid #999;padding: 10px;}
     .container ul li p {line-height: 30px;}
-    .container ul li p:nth-child(odd) span {color: red;}
+    .container ul li p.error span {color: red;}
     .container ul li p span {color: green;}
   </style>
 </head>
@@ -19,11 +19,15 @@
   <div class="container">
     <ul>
       {% for item in result %}
+        {% if item.diff.length > 0%}
         <li>
           <h4>{{loop.index}}、{{loop.key}}</h4>
-          <p><span>js Methods</span>: {{ item.jsMethod }}</p>
-          <p><span>wxml Methods</span>: {{ item.wxmlMethod }}</p>
+          <p><span>js Methods({{item.jsMethod.length}})</span>: {{ item.jsMethod }}</p>
+          <p><span>wxml Methods({{item.wxmlMethod.length}})</span>: {{ item.wxmlMethod }}</p>
+          <p class="error"><span>js文件有，但wxml没有引用({{item.diff.length}})</span>: {{ item.diff }}</p>
+          <!-- <p><span>wxml有引用，但js没定义</span>: {{ item.diff }}</p> -->
         </li>
+        {% endif %}
       {% endfor %}
     </ul>
   </div>

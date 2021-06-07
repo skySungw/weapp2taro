@@ -162,7 +162,25 @@ const lookInPage = ast => {
                         // console.log("5")
                             // propertyItem 每一个page 上的属性
                         if (propertyItem.type == PROPERTY.PROPERTY) {
-                            jsMethods.push(propertyItem.key.name);
+                            const filterArr = [
+                                'data',
+                                'onHide',
+                                'onShow',
+                                'onReady',
+                                'onLoad',
+                                'onUnload',
+                                'onTabItemTap',
+                                'onResize',
+                                'onPageScroll',
+                                'onAddToFavorites',
+                                'onReachBottom',
+                                'onShareTimeline',
+                                'onShareAppMessage',
+                                'onPullDownRefresh',
+                            ]
+                            if (!filterArr.includes(propertyItem.key.name)) {
+                                jsMethods.push(propertyItem.key.name);
+                            }
                             // 这里应该只是判断 原生自带的一些属性
                             // data属性, 转换属性如下
                             // data: {} =>  data() { return {} }

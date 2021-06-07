@@ -20,6 +20,7 @@ import config from '../weapp2taro.config';
 import path from 'path';
 const distFile = path.resolve(__dirname, 'dist.json');
 import toJson from '../parser/parseJsMethods.js';
+import { method } from 'koa/lib/request';
 const recast = require('recast');
 const getData = (code) => {
     const ast = recast.parse(code);
@@ -58,7 +59,9 @@ class Weapp {
         this.initBar();
         // 开始遍历所有文件
         this.files.forEach(v => {
+          if (v.split('.').length == 2) {
             this.readHtml(v);
+          }
         });
 
     }
@@ -77,7 +80,9 @@ class Weapp {
             }
             const type = file.split('.').pop();
             const replaceData = this.replaceRules(type, data);
-            this.setData(file.split('.')[0], type, replaceData);
+            if (file.split('.').length == 2) {
+              this.setData(file.split('.')[0], type, replaceData);
+            }
         })
     }
 
@@ -101,14 +106,32 @@ class Weapp {
             this.distData[midName][type] = data;
             if(type == 'wxml') {
               let methodsArr = [];
-              if (/bind\w+\=['|"]/g.test(data)) {
-                methodsArr = data.match(/(bind\w+\=['|"])([^' | ^"]+)(['|"])/g)
-                methodsArr.forEach((v, i)=> {
-                  methodsArr[i] = v.replace(/(bind\w+\=['|"])([^' | ^"]+)(['|"])/g, '$2')
-                })
+              if (/bind\:?\w+\=['|"]/g.test(data)) {
+                const res = data.match(/(bind\:?\w+\=['|"])([^' | ^"]+)(['|"])/g)
+                if (res) {
+                  methodsArr = res;
+                  methodsArr.forEach((v, i)=> {
+                    methodsArr[i] = v.replace(/(bind\:?\w+\=['|"])([^' | ^"]+)(['|"])/g, '$2')
+                  })
+                } else {
+                  methodsArr = [];
+                }
               }
+              let catchArr = [];
+              if (/catch\w+\=['|"]/g.test(data)) {
+                const res = data.match(/(catch\w+\=['|"])([^' | ^"]+)(['|"])/g)
+                if (res) {
+                  catchArr = res;
+                  catchArr.forEach((v, i)=> {
+                    catchArr[i] = v.replace(/(catch\w+\=['|"])([^' | ^"]+)(['|"])/g, '$2')
+                  })
+                } else {
+                  catchArr = [];
+                }
+              }
+              const fArr = catchArr.concat(methodsArr);
 
-              const uniqueArr = [...new Set(methodsArr)];
+              const uniqueArr = [...new Set(fArr)];
               this.distData[midName]['wxmlMethod'] = uniqueArr;
             }
             if (type == 'js') {
@@ -116,15 +139,25 @@ class Weapp {
                 const arr = getData(data);
                 const uniqueArr = [...new Set(arr)];
                
-                uniqueArr.forEach((v, i) => {
-                  let flag = false; // 没有引用 
-                  if (eval("/\\." + v + "\\(/g").test(data)) {
-                    flag = true; // 页面中有引用
+                // uniqueArr.forEach((v, i) => {
+                //   let flag = false; // 没有引用 
+                //   if (eval("/\\." + v + "\\(/g").test(data)) {
+                //     flag = true; // 页面中有引用
+                //   }
+                //   // uniqueArr[i] = (flag ? '': '无引用:') + v;
+                // });
+
+                for(let len = uniqueArr.length - 1; len >= 0; len--) {
+                  if (eval("/\\." + uniqueArr[len] + "\\(/g").test(data)) {
+                    // 页面中有引用
+                    uniqueArr.splice(len, 1)
                   }
-                  uniqueArr[i] = (flag ? '': '无引用:') + v;
-                });
+                }
                 this.distData[midName]['jsMethod'] = uniqueArr;
               } catch(err) {
+                if (this.count == --this.len) {
+                  this.finish();
+                }
                 console.log(`\n${midName} 文件解析有问题，可能包含 ...运算符`);
               }
             }
@@ -133,11 +166,29 @@ class Weapp {
         this.bar.tick(1);
         // 读取到所有数据，最后一次写入，暂未做判断
         if (this.count === this.len) {
-            this.wHtml(distFile, JSON.stringify(this.distData));
-            console.log("数据读取完成!");
-            console.log("开始重写wxml文件");
-            this.createServer(this.distData);
+            
+            this.finish();
         }
+    }
+    finish() {
+      this.wHtml(distFile, JSON.stringify(this.distData));
+      console.log("数据读取完成!");
+      console.log("开始重写wxml文件");
+      let data = this.distData;
+      for(let n in data) {
+        if (data[n] && data[n]['jsMethod']) {
+          let jsMethod = data[n]['jsMethod'];
+          let wxmlMethod = data[n]['wxmlMethod'];
+          let arr = [];
+          jsMethod.forEach(v => {
+            if (wxmlMethod && !wxmlMethod.includes(v)) {
+              arr.push(v);
+            }
+          })
+          this.distData[n]['diff'] = arr;
+        }
+      }
+      this.createServer(this.distData);
     }
     // 写文件
     wHtml(file, result) {
