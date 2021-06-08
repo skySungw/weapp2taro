@@ -1,4 +1,4 @@
-import { PARAMS, PROPERTY, WEAPP, COMPONENT, ONLY_CHANGE_PROPERTY_NAME } from '../config/Category.js';
+const { PARAMS, PROPERTY, WEAPP, COMPONENT, ONLY_CHANGE_PROPERTY_NAME } = require('../config/Category.js');
 const recast = require('recast');
 const { exportDefaultDeclaration, emptyStatement, property, returnStatement, functionExpression,visitArrowFunctionExpression, blockStatement, objectExpression } = recast.types.builders
 const convertDataProperty = (data) => {

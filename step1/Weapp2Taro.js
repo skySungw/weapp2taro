@@ -1,7 +1,7 @@
-import fs from 'fs';
+const fs = require('fs');
 const join = require('path').join;
 const compiler = require('vue-template-compiler')
-import config from '../weapp2taro.config';
+const config = require('../weapp2taro.config');
 // 匹配目标目录
 const { outPutDir, splitStr, includeDir } = config;
 includeDir.forEach((v, i) => {
@@ -322,4 +322,4 @@ class Weapp2Taro {
 
 }
 
-export default new Weapp2Taro();
+module.exports = new Weapp2Taro();

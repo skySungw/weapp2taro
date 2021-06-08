@@ -3,7 +3,8 @@ const path = require('path');
 const delDist = path.resolve(__dirname, '..', 'step1', 'delDist.js');
 const indexDist = path.resolve(__dirname, '..', 'step1', 'index.js');
 const weappDist = path.resolve(__dirname, '..', 'step1', 'weapp.js');
-excuteFn(`babel-node --presets env ${delDist} && babel-node --presets env ${indexDist} && babel-node --presets env ${weappDist}`, excuteFn )
+excuteFn(`node ./step1/getAllWxml.js && node ./step1/Weapp2Taro.js`)
+
 function excuteFn(command, callback) {
   require('child_process')
     .exec(command, {encoding: 'utf-8'}, (err, stdout, stderr) => {

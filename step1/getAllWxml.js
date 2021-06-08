@@ -3,8 +3,8 @@ const ProgressBar = require('progress');
 const fs = require('fs');
 const join = require('path').join;
 
-import config from '../weapp2taro.config';
-import RewriteFile from './RewriteFile';
+const config = require('../weapp2taro.config');
+const RewriteFile = require('./RewriteFile');
 // 匹配目标目录
 
 let { outPutDir, splitStr, includeDir } = config;
@@ -128,4 +128,4 @@ class Weapp {
         });
     }
 }
-export default new Weapp();
+module.exports = new Weapp();

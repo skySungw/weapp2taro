@@ -15,4 +15,4 @@ const config = {
 }
 config.splitStr = config.compute == 'windows' ? '\\' : '\/';
 
-export default config;
+module.exports = config;

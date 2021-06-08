@@ -1,7 +1,7 @@
-import fs from 'fs';
+const fs = require('fs');
 const ProgressBar = require('progress');
-import config from '../weapp2taro.config';
-import AstToJs from './AstToJs';
+const config = require('../weapp2taro.config');
+const AstToJs = require('./AstToJs');
 const recast = require('recast');
 const { splitStr } = config;
 
@@ -136,4 +136,4 @@ class RewriteFile {
     }
 
 }
-export default RewriteFile;
+module.exports = RewriteFile;

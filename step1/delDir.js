@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import config from '../weapp2taro.config';
+const fs = require('fs');
+const path = require('path');
+const config = require('../weapp2taro.config');
 
 const { sourceDir, outPutDir, splitStr } = config;
 
@@ -100,5 +100,4 @@ class PrepareParam {
         }
     }
 }
-
-export default new PrepareParam();
+module.exports = new PrepareParam();

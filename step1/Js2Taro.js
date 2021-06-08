@@ -1,10 +1,10 @@
-import fs from 'fs';
+const fs = require('fs');
 const join = require('path').join;
 
 const files = getJsonFiles("src");
 const pageFilters = 'src\\pages';
 const componentFilters = 'src\\component';
-import toJson from '../parser/json-parser.js';
+const toJson = require('../parser/json-parser.js');
 
 const recast = require('recast');
 const getData = (code) => {

@@ -47,7 +47,7 @@ const ONLY_CHANGE_PROPERTY_NAME = {
 const COMPONENT_PROPERTIES = {
 
 }
-export {
+module.exports = {
     PARAMS,
     PROPERTY,
     WEAPP,
