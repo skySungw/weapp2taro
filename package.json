@@ -1,7 +1,7 @@
 {
     "name": "weapp2taro",
-    "version": "1.0.1",
-    "description": "完成了以下几个属性转换",
+    "version": "1.0.2",
+    "description": "全局cli",
     "main": "index.js",
     "bin": {
         "weapp2taro": "./bin/weapp2taro"
