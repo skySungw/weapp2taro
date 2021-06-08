@@ -1,13 +1,21 @@
 #!/usr/bin/env node
-require('child_process')
-  .exec('npm run init', {encoding: 'utf-8'}, (err, stdout, stderr) => {
-     if (err) {
-        console.log(err.stack);
-        console.log('err code: ' + err.code);
-        console.log('Signal received: ' + err.signal);
-    }
-    //console.log(err, stdout, stderr);
-    console.log('data : ' + stdout);
-  }).on('exit', function (code) {
-      console.log('子进程已退出, 退出码 ' + code);
-  });
+const path = require('path');
+const delDist = path.resolve(__dirname, '..', 'step1', 'delDist.js');
+const indexDist = path.resolve(__dirname, '..', 'step1', 'index.js');
+const weappDist = path.resolve(__dirname, '..', 'step1', 'weapp.js');
+excuteFn(`babel-node --presets env ${delDist} && babel-node --presets env ${indexDist} && babel-node --presets env ${weappDist}`, excuteFn )
+function excuteFn(command, callback) {
+  require('child_process')
+    .exec(command, {encoding: 'utf-8'}, (err, stdout, stderr) => {
+      if (err) {
+          console.log(err.stack);
+          console.log('err code: ' + err.code);
+          console.log('Signal received: ' + err.signal);
+      }
+      //console.log(err, stdout, stderr);
+      console.log('data : ' + stdout);
+      callback && callback()
+    }).on('exit', function (code) {
+        console.log('子进程已退出, 退出码 ' + code);
+    });
+}
