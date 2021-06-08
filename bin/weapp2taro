@@ -1,22 +1,25 @@
 #!/usr/bin/env node
 const path = require('path');
-const delDist = path.resolve(__dirname, '..', 'step1', 'delDist.js');
-const indexDist = path.resolve(__dirname, '..', 'step1', 'index.js');
-const weappDist = path.resolve(__dirname, '..', 'step1', 'weapp.js');
-excuteFn(`node ./step1/getAllWxml.js && node ./step1/Weapp2Taro.js`)
+const figlet = require('figlet');
+// 读package.json信息
+const packageInfo = require(path.resolve(__dirname, '..', 'package.json'));
+const versionTip = figlet.textSync(packageInfo.name);
+// console.log(versionTip);
+// commonder提示信息
+const { program } = require('commander');
+// \n${versionTip}
+program.version(`${packageInfo.version}`, "-v,--version");
+program.option('-a, --analise', '分析js中未被wxml引用的方法');
+program.option('-c, --convert', '解析指定目录下wxml以及js文件，转成taro');
 
-function excuteFn(command, callback) {
-  require('child_process')
-    .exec(command, {encoding: 'utf-8'}, (err, stdout, stderr) => {
-      if (err) {
-          console.log(err.stack);
-          console.log('err code: ' + err.code);
-          console.log('Signal received: ' + err.signal);
-      }
-      //console.log(err, stdout, stderr);
-      console.log('data : ' + stdout);
-      callback && callback()
-    }).on('exit', function (code) {
-        console.log('子进程已退出, 退出码 ' + code);
-    });
-}
+const getCmd = require(path.resolve(__dirname, '..', 'config', 'cmd.config.js'));
+// 接收指令
+program.usage("<cmd> [env]")
+  .arguments("<cmd> [env]")
+  .action((cmd, p1, p2) => {
+    getCmd(cmd, p1, p2);
+  })
+
+
+// 解析用户输入命令
+program.parse(process.argv);

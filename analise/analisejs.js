@@ -1,11 +1,9 @@
 // 读取所有需要编译文件
 const ProgressBar = require('progress');
 const fs = require('fs');
+const path = require('path');
 const join = require('path').join;
-import opn from 'opn';
-
-// 匹配目标目录
-let { parseHtmlConfig, port, sourceDir, splitStr, includeDir } = config;
+const opn = require('opn');
 
 const Koa = require('koa');
 const Router = require('koa-router');
@@ -13,14 +11,17 @@ const Swig = require('koa-swig');
 const co = require('co');
 const router = new Router();
 const app = new Koa();
+
+const config = require('../weapp2taro.config');
+
+// 匹配目标目录
+let { parseHtmlConfig, port, sourceDir, splitStr, includeDir } = config;
+
 // html模板解析
 app.context.render = co.wrap(Swig(parseHtmlConfig));
 
-import config from '../weapp2taro.config';
-import path from 'path';
 const distFile = path.resolve(__dirname, 'dist.json');
-import toJson from '../parser/parseJsMethods.js';
-import { method } from 'koa/lib/request';
+const toJson = require(path.resolve(__dirname, '..', 'parser', 'parseJsMethods.js'));
 const recast = require('recast');
 const getData = (code) => {
     const ast = recast.parse(code);
@@ -245,4 +246,4 @@ class Weapp {
       });
     }
 }
-export default new Weapp();
+module.exports = new Weapp();
