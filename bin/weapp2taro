@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+require('child_process')
+  .exec('npm run init', {encoding: 'utf-8'}, (err, stdout, stderr) => {
+     if (err) {
+        console.log(error.stack);
+        console.log('Error code: ' + error.code);
+        console.log('Signal received: ' + error.signal);
+    }
+    //console.log(err, stdout, stderr);
+    console.log('data : ' + stdout);
+  }).on('exit', function (code) {
+      console.log('子进程已退出, 退出码 ' + code);
+  });
