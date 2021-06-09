@@ -4,8 +4,6 @@ const path = require('path');
 const config = require('../weapp2taro.config');
 let { splitStr } = config;
 
-
-
 class RewriteData {
     constructor() {
         this.file = path.resolve(__dirname, 'dist.json')
@@ -22,7 +20,6 @@ class RewriteData {
             let json = JSON.parse(data);
             for (let n in json) {
                 if (json[n]) {
-                    console.log('splitStr', `${splitStr}`)
                     const name = n.split(`${splitStr}`);
                     const className = name.reverse()[0] + '-auto-container';
                     this.distJson[n] = {};
