@@ -1,5 +1,5 @@
 const path = require('path');
-const config = {
+let config = {
     port: 8877,
     parseHtmlConfig: {
       root: path.resolve(__dirname, 'views'), // 视图文件路径
