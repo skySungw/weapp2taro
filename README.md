@@ -20,27 +20,18 @@
 ```
 #### 使用配置(mac、windows电脑需要做区分)
 
-在根目录，添加配置文件 weapp2taro.config.js , 文件内容如下：
+在根目录，添加配置文件 weapp2taro.config.json , 文件内容如下：
 
 ```
-  const path = require('path');
-  const config = {
+  {
       port: 8877, // 服务端口，为 weapp2taro a 做页面服务
-      parseHtmlConfig: {
-        root: path.resolve(__dirname, 'views'), // 视图文件路径
-        autoescape: true, // false:解析模板数据中的html
-        cache: false, // 'memory':请用缓存，避免每次刷新页面都去解析模板
-        ext: 'html'
-      },
       compute: 'mac', // 'windows' | 'mac'，根据自己电脑做适配
       // filePaths: ['src\\pages', 'src\\component'], // 需要匹配的目录
       sourceDir: 'src', // 源文件目录
       includeDir: ['pages', 'component'], // 需要转换的文件目录
       outPutDir: 'convertDir' // 转换后文件目录
   }
-  config.splitStr = config.compute == 'windows' ? '\\' : '\/';
 
-  module.exports = config;  
 ```
 
 ## 以下是完成的一些功能
