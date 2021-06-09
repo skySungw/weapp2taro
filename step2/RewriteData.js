@@ -1,7 +1,10 @@
 // 读取已知页面信息，并拼装vue文件、scss文件
 const fs = require('fs');
 const path = require('path');
-const config = require('../weapp2taro.config');
+let config = require('../weapp2taro.config');
+const userConfig = require(path.resolve(process.cwd(), 'weapp2taro.config.json'));
+
+config = Object.assign({}, config, userConfig);
 let { splitStr } = config;
 
 class RewriteData {

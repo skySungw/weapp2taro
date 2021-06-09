@@ -3,7 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const join = path.join;
 
-const config = require('../weapp2taro.config');
+let config = require('../weapp2taro.config');
+const userConfig = require(path.resolve(process.cwd(), 'weapp2taro.config.json'));
+
+config = Object.assign({}, config, userConfig);
 let { outPutDir, splitStr, includeDir } = config;
 
 includeDir.forEach((v, i) => {

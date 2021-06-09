@@ -3,7 +3,10 @@ const ProgressBar = require('progress');
 const fs = require('fs');
 const join = require('path').join;
 
-const config = require('../weapp2taro.config');
+let config = require('../weapp2taro.config');
+const userConfig = require(path.resolve(process.cwd(), 'weapp2taro.config.json'));
+
+config = Object.assign({}, config, userConfig);
 const RewriteFile = require('./RewriteFile');
 // 匹配目标目录
 

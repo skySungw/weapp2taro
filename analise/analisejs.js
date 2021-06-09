@@ -12,7 +12,10 @@ const co = require('co');
 const router = new Router();
 const app = new Koa();
 
-const config = require('../weapp2taro.config');
+let config = require('../weapp2taro.config');
+const userConfig = require(path.resolve(process.cwd(), 'weapp2taro.config.json'));
+
+config = Object.assign({}, config, userConfig);
 
 // 匹配目标目录
 let { parseHtmlConfig, port, sourceDir, splitStr, includeDir } = config;
