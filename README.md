@@ -1,9 +1,49 @@
-## weapp2Taro
-
-#### 微信小程序转Taro
+## 微信小程序转Taro 工具
 
 #### [git 地址](https://github.com/skySungw/weapp2taro)
 
+目前代码以tag分支为准
+
+## 安装及使用
+
+#### 安装
+```
+  npm i -g weapp2taro
+```
+#### 使用命令
+
+目前支持以下命令
+```
+  weapp2taro c // 将wxml、wxss、json、js四个文件 ，合成同目录下的vue、scss文件
+  weapp2taro a // 对比排查：js代码中定义的方法，而wxml页面没有调用的方法
+  weapp2taro -v // 查看 版本号
+```
+#### 使用配置(mac、windows电脑需要做区分)
+
+在根目录，添加配置文件 weapp2taro.config.js , 文件内容如下：
+
+```
+  const path = require('path');
+  const config = {
+      port: 8877, // 服务端口，为 weapp2taro a 做页面服务
+      parseHtmlConfig: {
+        root: path.resolve(__dirname, 'views'), // 视图文件路径
+        autoescape: true, // false:解析模板数据中的html
+        cache: false, // 'memory':请用缓存，避免每次刷新页面都去解析模板
+        ext: 'html'
+      },
+      compute: 'mac', // 'windows' | 'mac'，根据自己电脑做适配
+      // filePaths: ['src\\pages', 'src\\component'], // 需要匹配的目录
+      sourceDir: 'src', // 源文件目录
+      includeDir: ['pages', 'component'], // 需要转换的文件目录
+      outPutDir: 'convertDir' // 转换后文件目录
+  }
+  config.splitStr = config.compute == 'windows' ? '\\' : '\/';
+
+  module.exports = config;  
+```
+
+## 以下是完成的一些功能
 
 #### Page组件
 
