@@ -22,20 +22,21 @@ class RewriteData {
             let json = JSON.parse(data);
             for (let n in json) {
                 if (json[n]) {
-                    const name = n.split(splitStr);
+                    console.log('splitStr', `${splitStr}`)
+                    const name = n.split(`${splitStr}`);
                     const className = name.reverse()[0] + '-auto-container';
                     this.distJson[n] = {};
                     let innerJson = json[n];
                     innerJson['vue'] = "<template>";
-                    innerJson['vue'] += "\n";
+                    // innerJson['vue'] += "\n";
 
-                    innerJson['vue'] += `<div class="${className}">`;
+                    // innerJson['vue'] += `<div class="${className}">`;
                     innerJson['vue'] += "\n";
                     innerJson['vue'] += innerJson['wxml'];
                     innerJson['vue'] += "\n";
 
-                    innerJson['vue'] += "<div>";
-                    innerJson['vue'] += "\n";
+                    // innerJson['vue'] += "<div>";
+                    // innerJson['vue'] += "\n";
                     innerJson['vue'] += "</template>";
                     innerJson['vue'] += "\n";
                     innerJson['vue'] += "<script>";
