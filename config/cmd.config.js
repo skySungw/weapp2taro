@@ -5,6 +5,9 @@ const delDist = path.resolve(__dirname, '..', 'step1', 'delDir.js');
 const indexDist = path.resolve(__dirname, '..', 'step1', 'getAllWxml.js');
 const weappDist = path.resolve(__dirname, '..', 'step1', 'Weapp2Taro.js');
 
+const afterConvertFile = path.resolve(__dirname, '..', 'step2', 'index.js');
+const rewriteDataDist = path.resolve(__dirname, '..', 'step2', 'RewriteData.js');
+
 const analise = path.resolve(__dirname, '..', 'analise', 'analisejs.js');
 
 // excuteFn(`node ${delDist} && node ${indexDist} && node ${weappDist}`)
@@ -32,7 +35,7 @@ module.exports = function(cmd, arg) {
       break;
     case 'c':
     case 'convert':
-      excuteFn(`node ${delDist} && node ${indexDist} && node ${weappDist}`)
+      excuteFn(`node ${delDist} && node ${indexDist} && node ${weappDist} && node ${afterConvertFile} && node ${rewriteDataDist}`)
       break;
     default:
       console.log(`${cmd}不存在，请输入 --help 查看帮助`);
