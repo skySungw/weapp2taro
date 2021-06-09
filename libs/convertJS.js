@@ -3,8 +3,8 @@ const join = require('path').join;
 const http = require('http');
 
 const files = getJsonFiles("src");
-const pageFilters = 'src\\pages';
-const componentFilters = 'src\\component';
+const pageFilters = 'src\/pages';
+const componentFilters = 'src\/component';
 const dist = join('watch', 'dist.json');
 import toJson from '../parser/json-parser.js';
 

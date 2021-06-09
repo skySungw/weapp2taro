@@ -15,7 +15,8 @@
         "wxml": "node ./template.js",
         "parse:wxml": "node ./step1/getAllWxml.js && node ./step1/Weapp2Taro.js",
         "del": "node ./step1/delDir.js",
-        "init": "npm run del && npm run parse:wxml"
+        "init": "npm run del && npm run parse:wxml && npm run convert:start",
+        "convert:start": "node ./step2/index.js && node ./step2/RewriteData.js"
     },
     "keywords": [],
     "author": "sunguowei",
