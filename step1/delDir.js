@@ -2,9 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 let config = require('../weapp2taro.config');
-const userConfig = require(path.resolve(process.cwd(), 'weapp2taro.config.json'));
-
-config = Object.assign({}, config, userConfig);
 const { sourceDir, outPutDir, splitStr } = config;
 
 // 做删除,copy文件准备

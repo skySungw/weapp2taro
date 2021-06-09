@@ -1,6 +1,6 @@
 {
     "name": "weapp2taro",
-    "version": "1.1.6",
+    "version": "1.1.7",
     "description": "微信小程序转Taro",
     "main": "index.js",
     "bin": {
@@ -67,5 +67,5 @@
     "bugs": {
         "url": "https://github.com/skySungw/weapp2taro/issues"
     },
-    "homepage": "https://github.com/skySungw/weapp2taro/tree/v1.1.6"
+    "homepage": "https://github.com/skySungw/weapp2taro/tree/v1.1.7"
 }

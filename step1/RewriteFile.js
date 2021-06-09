@@ -2,9 +2,6 @@ const fs = require('fs');
 const ProgressBar = require('progress');
 const path = require('path');
 let config = require('../weapp2taro.config');
-const userConfig = require(path.resolve(process.cwd(), 'weapp2taro.config.json'));
-
-config = Object.assign({}, config, userConfig);
 const AstToJs = require('./AstToJs');
 const recast = require('recast');
 const { splitStr } = config;

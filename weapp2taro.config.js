@@ -13,6 +13,9 @@ const config = {
     includeDir: ['pages', 'component'], // 需要转换的文件目录
     outPutDir: 'convertDir' // 转换后文件目录
 }
+const userConfig = require(path.resolve(process.cwd(), 'weapp2taro.config.json'));
+config = Object.assign({}, config, userConfig);
+
 config.splitStr = config.compute == 'windows' ? '\\' : '\/';
 
 module.exports = config;
