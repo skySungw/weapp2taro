@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const join = require('path').join;
 const compiler = require('vue-template-compiler')
 let config = require('../weapp2taro.config');

@@ -1,6 +1,7 @@
 // 读取所有需要编译文件
 const ProgressBar = require('progress');
 const fs = require('fs');
+const path = require('path');
 const join = require('path').join;
 
 let config = require('../weapp2taro.config');
