@@ -21,10 +21,10 @@ function excuteFn(command, callback) {
           console.log('Signal received: ' + err.signal);
       }
       //console.log(err, stdout, stderr);
-      console.log('data : ' + stdout);
+      // console.log('data : ' + stdout);
       callback && callback()
     }).on('exit', function (code) {
-        console.log('子进程已退出, 退出码 ' + code);
+        // console.log('子进程已退出, 退出码 ' + code);
     });
 }
 module.exports = function(cmd, arg) {

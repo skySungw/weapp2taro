@@ -10,9 +10,10 @@ import toJson from '../parser/json-parser.js';
 
 // let acorn = require("acorn");
 // console.log(acorn.parse("1 + 1", { ecmaVersion: 2020 }));
+const babel = require('@babel/parser');
 const recast = require('recast');
 const getData = (code) => {
-    const ast = recast.parse(code);
+    const ast = recast.parse(code, { parser: { parse: babel.parse } });
     const res = toJson(ast);
     //将AST对象重新转回可以阅读的代码
     return recast.print(res).code;

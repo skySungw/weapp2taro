@@ -19,12 +19,12 @@ let { parseHtmlConfig, port, sourceDir, splitStr, includeDir } = config;
 
 // html模板解析
 app.context.render = co.wrap(Swig(parseHtmlConfig));
-
 const distFile = path.resolve(__dirname, 'dist.json');
 const toJson = require(path.resolve(__dirname, '..', 'parser', 'parseJsMethods.js'));
+const babel = require('@babel/parser');
 const recast = require('recast');
 const getData = (code) => {
-    const ast = recast.parse(code);
+    const ast = recast.parse(code, { parser: { parse: babel.parse } });
     const arr = toJson(ast);
     // 页面方法对象
     return arr;
@@ -167,7 +167,6 @@ class Weapp {
         this.bar.tick(1);
         // 读取到所有数据，最后一次写入，暂未做判断
         if (this.count === this.len) {
-            
             this.finish();
         }
     }

@@ -3,6 +3,7 @@ const ProgressBar = require('progress');
 const path = require('path');
 let config = require('../weapp2taro.config');
 const AstToJs = require('./AstToJs');
+const babel = require('@babel/parser');
 const recast = require('recast');
 const { splitStr } = config;
 
@@ -12,7 +13,7 @@ class RewriteFile {
     }
 
     getData(code) {
-        const ast = recast.parse(code);
+        const ast = recast.parse(code, { parser: { parse: babel.parse } });
         const astToJs = new AstToJs()
         const res = astToJs.init(ast);
         //将AST对象重新转回可以阅读的代码
